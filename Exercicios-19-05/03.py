@@ -9,7 +9,7 @@ class Calculadora:
     return v1 - v2
   
   def multiplicar(self, valores):
-    produto = 0
+    produto = 1  # Inicializar o produto como 1
     
     for i in valores:
       produto *= i
