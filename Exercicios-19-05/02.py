@@ -1,51 +1,58 @@
 class Pessoa:
   def __init__(self, nome, cpf, dataNascimento):
-    self.nome = nome
-    self.cpf = cpf
-    self.dataNascimento = dataNascimento
+    self._nome = nome
+    self._cpf = cpf
+    self._dataNascimento = dataNascimento
 
-  def get_nome(self):
-    return self.nome
+  @property
+  def nome(self):
+    return self._nome
 
-  def get_cpf(self):
-    return self.cpf
+  @property
+  def cpf(self):
+    return self._cpf
 
-  def get_dataNascimento(self):
-    return self.dataNascimento
+  @property
+  def data_nascimento(self):
+    return self._dataNascimento
   
-  def alterarNome(self, nome):
-    self.nome = nome
+  def alterar_nome(self, nome):
+    self._nome = nome
   
-class contaCorrente:
-  def __init__(self, correntista, saldo = 0):
-    self.correntista = correntista
-    self.saldo, self.depositos, self.saques = saldo, [], []
+class ContaCorrente:
+  def __init__(self, correntista, saldo=0):
+    self._correntista = correntista
+    self._saldo = saldo
+    self._depositos = []
+    self._saques = []
   
   def depositar(self, valor):
-    self.depositos.append(valor)
-    self.saldo += valor
+    self._depositos.append(valor)
+    self._saldo += valor
   
-  def sacar(self, valor)  :
-    self.saques.append(valor)
-    
-    if self.saldo >= valor:
-      self.saldo -= valor
+  def sacar(self, valor):
+    if self._saldo >= valor:
+      self._saques.append(valor)
+      self._saldo -= valor
     else:
-      print('Valor indisponivel')
+      raise ValueError('Valor indisponível')
     
-  def get_saldo(self):
-    return self.saldo
+  @property
+  def saldo(self):
+    return self._saldo
 
-  def alterarNome(self, nome):
-    self.correntista.alterarNome(nome)
+  def alterar_nome_correntista(self, nome):
+    self._correntista.alterar_nome(nome)
   
-  def get_nomeCorrentista(self):
-    return self.correntista.nome
+  @property
+  def nome_correntista(self):
+    return self._correntista.nome
 
-joao = Pessoa('João', '487.249.608-61', '16-08-2003')   
-conta1 = contaCorrente(joao)
+
+joao = Pessoa('João', '487.249.608-61', '16-08-2003')
+conta1 = ContaCorrente(joao)
 conta1.depositar(500)
 conta1.sacar(200)
-print(conta1.get_saldo())
-conta1.alterarNome('João Hugo')
-print(conta1.get_nomeCorrentista())
+print(conta1.saldo)
+conta1.alterar_nome_correntista('João Hugo')
+print(conta1.nome_correntista)
